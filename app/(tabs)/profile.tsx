@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, Image, SafeAreaView, StatusBar, Platform, ScrollView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, SafeAreaView, StatusBar, Platform, Dimensions, ScrollView } from 'react-native';
 import { auth } from '@/firebase-config';
 import { useState, useEffect } from 'react';
+import PostGrid from '@/components/PostGrid';
 
 export default function ProfileScreen() {
   const [displayName, setDisplayName] = useState<string | null>(null);
@@ -13,27 +14,23 @@ export default function ProfileScreen() {
   }, []);
 
   return (
-    <SafeAreaView style={[{ flex: 1, backgroundColor: '#fff', paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }]}>
-      <StatusBar barStyle='dark-content' backgroundColor="#fff" />
-      <ScrollView style={styles.container}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff', paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <ScrollView contentContainerStyle={styles.containerContent} style={styles.container}>
         <Image
-          source={require('@/assets/images/header-image.jpg')}
+          source={require('@/assets/images/c75eb98386f768e88fe3778a18066bf8.jpg')}
           style={styles.headerImage}
         />
         <View style={styles.profileView}>
           <Image
-            source={require('@/assets/images/profileicon.jpg')}
+            source={require('@/assets/images/c65eb98386f768e88fe3778a18066bf7.jpg')}
             style={styles.profileImage}
           />
           <Text style={styles.profileText}>{displayName}</Text>
-          <Text style={styles.profileSubText}>Welcome to my profile!</Text>
+          <Text style={styles.profileSubText}>Keep things moving</Text>
         </View>
 
-        <View style={styles.profileContent}>
-          <View>
-            <Text style={{ color: '#000', textAlign: 'left' }}>Works</Text>
-          </View>
-        </View>
+        <View style={styles.postContentGrid}> <PostGrid /> </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -42,17 +39,22 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
+    flex: 1,
+  },
+  containerContent: {
+    paddingBottom: 20,
   },
   headerImage: {
+    zIndex: -1,
+    position: 'absolute',
     width: '100%',
-    height: Dimensions.get('window').height * 0.3,
+    height: Dimensions.get('window').height * 0.2,
     resizeMode: 'cover',
   },
   profileView: {
-    zIndex: 1,
+    top: Dimensions.get('window').height * 0.12,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
     width: '95%',
     borderRadius: 15,
     padding: 20,
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
   },
   profileText: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     marginTop: 10,
     color: '#000',
@@ -77,14 +79,10 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 5,
   },
-  profileContent: {
-    width: '95%',
-    backgroundColor: '#f0f0f0',
-    borderRadius: 15,
-    padding: 20,
-    marginBottom: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+
+  postContentGrid: {
+    width: '100%',
     alignSelf: 'center',
+    marginTop: 90,
   },
 });
